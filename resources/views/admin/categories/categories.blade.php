@@ -2,13 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Dashboard</title>
+    <title>Admin Categories</title>
     @vite('resources/css/app.css')
 </head>
 <body>
     <x-navbar :name="$admin->name"></x-navbar>
-    <div class="bg-gray-100 flex flex-col items-center min-h-screen pt-5">
 
-    </div>
 </body>
 </html>

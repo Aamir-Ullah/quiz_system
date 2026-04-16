@@ -10,3 +10,5 @@ Route::get('/', function () {
 Route::view('/admin-login','admin.admin-login');
 Route::post('/admin-login',[AdminController::class,'adminLogin'])->name('admin.login');
 Route::get('/admin-dashboard',[AdminController::class,'adminDashboard'])->name('admin.dashboard');
+Route::get('/admin-categories',[AdminController::class,'adminCategories'])->name('admin.categories');
+Route::get('/admin-logout',[AdminController::class,'adminLogout'])->name('admin.logout');

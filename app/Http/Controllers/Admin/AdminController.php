@@ -15,7 +15,11 @@ class AdminController extends Controller
     {
        
         $admin = Session::get('admin');
-        return view('admin.admin-index', compact('admin'));
+        if($admin){
+            return view('admin.admin-index', compact('admin'));
+        }else{
+            return redirect()->route('admin.login');
+        }
     }
     public function adminLogin(Request $request)
     {
@@ -33,7 +37,23 @@ class AdminController extends Controller
         }
 
         Session::put('admin', $admin);
+        if(Session::get('admin')){
+            return redirect()->route('admin.dashboard');
+        }
+        return redirect()->route('admin.login');    
+    }
 
-        return redirect()->route('admin.dashboard');
+    public function adminCategories(){
+        $admin = Session::get('admin');
+        if($admin){
+            return view('admin.categories.categories', compact('admin'));
+        }else{
+            return redirect()->route('admin.login');
+        }
+    }
+
+    public function adminLogout(){
+        Session::forget('admin');
+        return redirect()->route('admin.login');
     }
 }
