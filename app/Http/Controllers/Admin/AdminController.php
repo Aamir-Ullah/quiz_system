@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Admin;
+use App\Models\Category\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -56,4 +57,19 @@ class AdminController extends Controller
         Session::forget('admin');
         return redirect()->route('admin.login');
     }
+
+    public function addCategory(Request $request){
+        $admin=Session::get('admin');
+        $category=new Category();
+        $category->category=$request->category;
+        $category->creator=$admin->name;
+        if($category->save()){
+            Session::flash("category", "Category". $request->category. " added successfully");
+            return redirect()->route('admin.categories');
+        }else{
+            Session::flash("category", "Failed to add category");
+            return redirect()->route('admin.categories');
+        }
+    }
+
 }

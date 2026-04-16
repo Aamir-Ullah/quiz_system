@@ -12,3 +12,7 @@ Route::post('/admin-login',[AdminController::class,'adminLogin'])->name('admin.l
 Route::get('/admin-dashboard',[AdminController::class,'adminDashboard'])->name('admin.dashboard');
 Route::get('/admin-categories',[AdminController::class,'adminCategories'])->name('admin.categories');
 Route::get('/admin-logout',[AdminController::class,'adminLogout'])->name('admin.logout');
+
+// Routes for Categories
+
+Route::post("/add-category",[AdminController::class,'addCategory'])->name('admin.add-category');
