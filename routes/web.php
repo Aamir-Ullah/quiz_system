@@ -16,3 +16,4 @@ Route::get('/admin-logout',[AdminController::class,'adminLogout'])->name('admin.
 // Routes for Categories
 
 Route::post("/add-category",[AdminController::class,'addCategory'])->name('admin.add-category');
+Route::get("/category/delete/{id}",[AdminController::class,'deleteCategory'])->name('admin.delete-category');

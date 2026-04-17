@@ -14,11 +14,11 @@ class AdminController extends Controller
 {
     public function adminDashboard()
     {
-       
+
         $admin = Session::get('admin');
-        if($admin){
+        if ($admin) {
             return view('admin.admin-index', compact('admin'));
-        }else{
+        } else {
             return redirect()->route('admin.login');
         }
     }
@@ -38,38 +38,56 @@ class AdminController extends Controller
         }
 
         Session::put('admin', $admin);
-        if(Session::get('admin')){
+        if (Session::get('admin')) {
             return redirect()->route('admin.dashboard');
         }
-        return redirect()->route('admin.login');    
+        return redirect()->route('admin.login');
     }
 
-    public function adminCategories(){
+    public function adminCategories()
+    {
         $admin = Session::get('admin');
-        if($admin){
-            return view('admin.categories.categories', compact('admin'));
-        }else{
+        $categories = Category::select('id', 'category', 'creator')->get();
+        if ($admin) {
+            return view('admin.categories.categories', compact('admin', 'categories'));
+        } else {
             return redirect()->route('admin.login');
         }
     }
 
-    public function adminLogout(){
+    public function adminLogout()
+    {
         Session::forget('admin');
         return redirect()->route('admin.login');
     }
 
-    public function addCategory(Request $request){
-        $admin=Session::get('admin');
-        $category=new Category();
-        $category->category=$request->category;
-        $category->creator=$admin->name;
-        if($category->save()){
-            Session::flash("category", "Category". $request->category. " added successfully");
+    public function addCategory(Request $request)
+    {
+        $validation = $request->validate([
+            "category" => "required|unique:categories,category|string|min:3"
+        ]);
+        $admin = Session::get('admin');
+        $category = new Category();
+        $category->category = $request->category;
+        $category->creator = $admin->name;
+        if ($category->save()) {
+            Session::flash("category", "Category" . $request->category . " added successfully");
             return redirect()->route('admin.categories');
-        }else{
+        } else {
             Session::flash("category", "Failed to add category");
             return redirect()->route('admin.categories');
         }
     }
 
+    public function deleteCategory($id)
+    {
+        $deleteCategory = Category::find($id)->delete();
+        if ($deleteCategory) {
+            Session::flash("category", "Category deleted successfully");
+            return redirect()->route('admin.categories');
+        } else {
+            Session::flash("category", "Failed to delete category");
+            return redirect()->route('admin.categories');
+        }
+    }
 }
