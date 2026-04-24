@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\QuizController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -17,3 +18,8 @@ Route::get('/admin-logout',[AdminController::class,'adminLogout'])->name('admin.
 
 Route::post("/add-category",[AdminController::class,'addCategory'])->name('admin.add-category');
 Route::get("/category/delete/{id}",[AdminController::class,'deleteCategory'])->name('admin.delete-category');
+
+
+// Routes for Quiz
+
+Route::get('/add-quiz',[QuizController::class,'addQuiz'])->name('admin.add-quiz');
